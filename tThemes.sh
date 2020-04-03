@@ -7,8 +7,8 @@ repo='https://github.com/mbadolato/iTerm2-Color-Schemes.git'
 [ $(command -v dmenu) ] || ( echo "Need to install dmenu"  ;  sudo $install dmenu)
 
 
-# Clone or pull
-[ -d ~/$repoDir ] && ( cd ~/$repoDir && git pull ) || ( rm -r ~/$repoDir ; mkdir ~/$repoDir && git clone $repo ~/$repoDir )
+# Clone or pull; if it doesn't exist the repo is cloned; if an error happens clone is reattempted; otherwise the program exists
+[ -d ~/$repoDir ] && ( cd ~/$repoDir && git pull ) || ( git clone $repo ~/$repoDir || rm -rf ~/$repoDir && git clone $repo ~/$repoDir) || exit
 
 # Select terminal
 cd ~/$repoDir
@@ -21,11 +21,11 @@ theme=$( (ls | sed 's/\.[^.]*$//'  & echo "*") | dmenu -i -p "Theme? (or *)")
 # Create theme folder if it doesn't exist
 [ ! -d ~/.local/share/$term ] && mkdir -p ~/.local/share/$term
 
-# Copy theme files
+# Copy theme files in .local/share
 cp ./$theme* ~/.local/share/$term
 
 # Remove themes directory?
 remove=$(echo "No\nYes"  | dmenu -i -p "Remove themes repo?")
-[ "$remove" = "Yes" ] && rm -r ~/$repoDir
+[ "$remove" = "Yes" ] && rm -rf ~/$repoDir
 
 exit
