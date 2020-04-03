@@ -1,21 +1,21 @@
 #!/bin/sh
 
-dir='THEMES'
-install='apt install '
+repoDir='THEMES'
+install='apt install'
 repo='https://github.com/mbadolato/iTerm2-Color-Schemes.git'
 
 [ $(command -v dmenu) ] || ( echo "Need to install dmenu"  ;  sudo $install dmenu)
 
 
 # Clone or pull
-[ -d ~/$dir ] && ( cd ~/$dir && git pull ) || ( rm -r ~/$dir ; mkdir ~/$dir && git clone $repo ~/$dir )
+[ -d ~/$repoDir ] && ( cd ~/$repoDir && git pull ) || ( rm -r ~/$repoDir ; mkdir ~/$repoDir && git clone $repo ~/$repoDir )
 
 # Select terminal
-cd ~/$dir
+cd ~/$repoDir
 term=$( ls | sed '/LICENSE/d; /README.md/d; /backgrounds/d; /windowsterminal/d; /screenshots/d;' | dmenu -i -p "Which terminal?" )
 
 # Select theme
-cd ~/$dir/$term; 
+cd ~/$repoDir/$term; 
 theme=$( (ls | sed 's/\.[^.]*$//'  & echo "*") | dmenu -i -p "Theme? (or *)")
 
 # Create theme folder if it doesn't exist
@@ -26,6 +26,6 @@ cp ./$theme* ~/.local/share/$term
 
 # Remove themes directory?
 remove=$(echo "No\nYes"  | dmenu -i -p "Remove themes repo?")
-[ "$remove" = "Yes" ] && rm -r ~/$dir
+[ "$remove" = "Yes" ] && rm -r ~/$repoDir
 
 exit
