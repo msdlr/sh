@@ -59,14 +59,22 @@ case $term in
 		echo "Installing $theme.conf"
 	
 		Theme=$(cat ~/$repoDir/$term/$theme.conf)
-
-		echo "$Theme" | less
-
-		sed '/^palette_color/d ; /^.g_color/d ; /^color_preset/d ; s/\[shortcut\]/ASD\n\[shortcut\]/g ' .config/lxterminal/lxterminal.conf
 		
+		# First part of the file without the color directives
+		sed -e "/^palette_color/d ; /^.g_color/d ; /^color_preset/d ; s/\[shortcut\]/;THEME/g ; /;THEME/q " ~/.config/lxterminal/lxterminal.conf > lxt1
+
+		# The last lines until [shortcut]
+		tac ~/.config/lxterminal/lxterminal.conf | sed '/^\[shortcut\]$/q' > lxt3r
+		tac lxt3r > lxt3
+
+		# Join all the files together
+		cat lxt1 ~/$repoDir/$term/$theme.conf lxt3 | sed '/^;Paste the following*/d' > ~/.config/lxterminal/lxterminal.conf 
+
+		#Remove files created
+		rm ltx1 ltx3 ltx3r
 		;;
 	*)
-		echo "error"
+		echo "Not a terminal"
 		exit
 		;;
 esac
