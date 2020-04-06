@@ -17,6 +17,7 @@ terminals='konsole\nxfce4terminal\nlxterminal'
 # Select terminal
 cd ~/$repoDir
 
+clear
 term=$( echo $terminals | fzy )
 
 case $term in
@@ -24,7 +25,8 @@ case $term in
 		# Stablish copy directory and select theme
 		copyDir="$HOME/.local/share/konsole"
 		thList=$( ls ~/$repoDir/$term | sed '/~/d')
-		theme=$( (echo "$thList" | sed 's/\.[^.]*$//'  & echo "*") | fzy -p "Theme? (or *)" | sed -e 's/\ /*/g' )
+		clear
+		theme=$( (echo "$thList" | sed 's/\.[^.]*$//'  & echo "*") | fzy -l `tput lines` -p "Theme? (or *)" | sed -e 's/\ /*/g' )
 		echo "Installing $theme"
 	
 		# Create the themes folder if it doesn't exist
@@ -40,7 +42,8 @@ case $term in
 	
 		copyDir="$HOME/.local/share/xfce4/terminal/colorschemes"
 		thList=$( ls ~/$repoDir/$term/colorschemes | sed '/~/d')
-		theme=$( (echo "$thList" | sed 's/\.[^.]*$//'  & echo "*") | fzy -p "Theme? (or *)" | sed -e 's/\ /*/g' )
+		clear
+		theme=$( (echo "$thList" | sed 's/\.[^.]*$//'  & echo "*") | fzy -l `tput lines` -p "Theme? (or *)" | sed -e 's/\ /*/g' )
 		echo "Installing $theme"
 		
 		# Create the themes folder if it doesn't exist
@@ -53,7 +56,8 @@ case $term in
 
 	lxterminal)
 		thList=$( ls ~/$repoDir/$term | sed '/~/d')
-		theme=$( (echo "$thList" | sed 's/\.[^.]*$//') | fzy -p "Theme? ($term)")
+		theme=$( (echo "$thList" | sed 's/\.[^.]*$//') | fzy -l `tput lines` -p "Theme? ($term)")
+		clear
 		echo "Installing $theme.conf"
 	
 		Theme=$(cat ~/$repoDir/$term/$theme.conf)
