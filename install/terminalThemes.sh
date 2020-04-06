@@ -11,12 +11,11 @@ terminals='konsole\nxfce4terminal\nlxterminal'
 [ $(command -v fzy) ] || ( echo "Need to install fzy"  ;  sudo $install fzy)
 
 
-# Clone or pull; if it doesn't exist the repo is cloned; if an error happens clone is reattempted; otherwise the program exists
+# Clone or pull; if it doesn't exist the repo is cloned; if an error happens the program exists
 [ -d ~/$repoDir ] && ( cd ~/$repoDir && git pull ) || ( rm -rf ~/$repoDir && git clone $repo ~/$repoDir) || exit
 
 # Select terminal
 cd ~/$repoDir
-#term=$( ls | sed '/LICENSE/d; /README.md/d; /backgrounds/d; /windowsterminal/d; /screenshots/d;' | fzy -p "Which terminal?" )
 
 term=$( echo $terminals | fzy )
 
