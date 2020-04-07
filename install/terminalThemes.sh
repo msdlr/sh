@@ -3,10 +3,7 @@
 repoDir='THEMES'
 install='apt install'
 repo='https://github.com/mbadolato/iTerm2-Color-Schemes.git'
-terminals='konsole\nxfce4terminal\nlxterminal'
-
-#sed '/^palette_color/d ; /^.g_color/d ; /^color_preset/d ; s/\[shortcut\]/ASD\n\[shortcut\]/g ' .config/lxterminal/lxterminal.conf
-
+terminals="konsole\nxfce4terminal\nlxterminal"
 
 [ $(command -v fzy) ] || ( echo "Need to install fzy"  ;  sudo $install fzy)
 
@@ -18,7 +15,7 @@ terminals='konsole\nxfce4terminal\nlxterminal'
 cd ~/$repoDir
 
 clear
-term=$( echo $terminals | fzy )
+term=$( echo -n "$terminals" | fzy )
 
 case $term in
 	konsole)
