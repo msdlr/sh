@@ -13,7 +13,13 @@
 
 [ -z "$2" ] && days="7" || days="$2"
 
-	# echo "Cleanup: $dir, older than $days days"
+# Find files and delete them (Not the directry itself)
+cd $dir
+files=`find . -mtime +$days | sed '/\.$/d'`
 
-rm -rf `find $dir -mtime +$days;`
+for file in $files
+do
+	rm -rf $file 2>/dev/null 
+done
+
 exit
