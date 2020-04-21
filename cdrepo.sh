@@ -5,8 +5,9 @@ repodir=$(find . -name '.git' | sed 's|^\.\/||g  ; s|\/.git$||' | fzy -l `tput l
 
 # git status and files
 cd $repodir
-git status && ls -l 
+ls -l && git status  
 
 # Execute shell on that directory
-`echo $0`
+
+bash 
 exit
