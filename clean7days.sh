@@ -2,7 +2,7 @@
 
 # Selects downloads directory
 
-[ -d  $HOME/Descargas ] && dir="$HOME/Descargas" || 
+[ -d  $HOME/Descargas ] && dir="$HOME/Descargas" 
 [ -d  $HOME/Downloads ] && dir="$HOME/Downloads" 
 
 # Otherwise, the parameter
