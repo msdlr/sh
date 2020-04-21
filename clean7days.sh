@@ -7,7 +7,7 @@
 
 # Otherwise, the parameter
 
-[ -z "$1" ] && echo "no arg" || dir="$1"
+[ -z "$1" ] || dir="$1"
 
 # Remove files older than 7 days, or second parameter
 
