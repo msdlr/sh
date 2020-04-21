@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 clear
 repodir=$(find . -name '.git' | sed 's|^\.\/||g  ; s|\/.git$||' | fzy -l `tput lines`)
