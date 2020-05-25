@@ -1,6 +1,6 @@
 #!/bin/sh
 
-repoDir='THEMES'
+repoDir='.termThemes'
 install='apt install'
 repo='https://github.com/mbadolato/iTerm2-Color-Schemes.git'
 terminals="konsole\nxfce4terminal\nlxterminal"
