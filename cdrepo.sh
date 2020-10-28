@@ -1,7 +1,7 @@
 #!/bin/sh
 
 clear
-repodir=$(find . -name '.git' | sed 's|^\.\/||g  ; s|\/.git$||' | fzy -l `tput lines`)
+repodir=$( locate $(pwd)*.git | sed 's/\/.git//' | fzy -l `tput lines`)
 
 # git status and files
 cd $repodir
