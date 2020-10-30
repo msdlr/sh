@@ -1,5 +1,7 @@
 #!/bin/sh
 
+ which fzy >/dev/null || exit
+
 clear
 repodir=$( locate $(pwd)*.git | sed 's/\/.git//' | fzy -l `tput lines`)
 
