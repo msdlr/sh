@@ -1,6 +1,6 @@
 #!/bin/sh
 
-apt install -y wget
+apt install -y wget curl
 
 # Install
 
@@ -21,5 +21,10 @@ sudo apt-get install -y kubectl
 
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
   && chmod +x minikube && sudo cp minikube /usr/local/bin && rm minikube
+
+# Virtualbox
+
+sudo apt install -y virtualbox
+
 
 exit
