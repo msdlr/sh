@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env/sh
 
 repoDir='.termThemes'
 install='apt install'
