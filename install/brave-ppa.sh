@@ -1,4 +1,4 @@
-#!/usr/bin/env/sh
+#!/usr/bin/env sh
 
 
 # Just the official instructions to install brave, on a shell script

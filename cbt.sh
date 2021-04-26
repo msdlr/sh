@@ -1,4 +1,4 @@
-#!/usr/bin/env/sh
+#!/usr/bin/env sh
 
 # Remove spaces in filenames
 find -name "* *" -type d | rename 's/ //g'
