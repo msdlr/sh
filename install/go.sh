@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-PREFIX=/usr/local
+PREFIX=/opt
 
 [ -z "$1" ] &&  VERSION=$(curl -s https://golang.org/dl/ | grep src.tar.gz | head -n 1 | sed 's/^.*go//g; s/.src.tar.gz">//') || VERSION="$1"
 
