@@ -15,7 +15,7 @@ DEST=server
 # Remove trailing '/' from autocompletion
 LOCAL_DIR=$(echo $LOCAL_DIR | sed 's|/$||')
 
-PATH_REMOTE=$(basename $(echo $LOCAL_DIR | sed "s/$USER/$USER_REMOTE/g"))
+PATH_REMOTE=$(dirname $(echo $LOCAL_DIR | sed "s/$USER/$USER_REMOTE/g"))
 
 # Dependencies: entr, rsync
 inst='sudo apt install -y'
