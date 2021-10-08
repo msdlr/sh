@@ -2,7 +2,7 @@
 
 prefix="$HOME/src"
 
-repos=$(find $prefix -type d -maxdepth 1 )
+repos=$(find $prefix -maxdepth 1 -type d)
 
 for r in $repos
 do
