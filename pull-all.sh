@@ -8,6 +8,6 @@ for r in $repos
 do
 	if [ -d $r/.git ]; then
 		cd $r	
-		git pull &
+		timeout 600 git pull &
 	fi
 done
