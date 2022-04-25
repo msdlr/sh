@@ -2,7 +2,7 @@
 
 PREFIX=/opt
 
-[ -z "$1" ] &&  VERSION=$(curl -s https://golang.org/dl/ | grep src.tar.gz | head -n 1 | sed 's/^.*go//g; s/.src.tar.gz">//') || VERSION="$1"
+[ -z "$1" ] &&  VERSION=$(curl -s https://go.dev/dl/ | grep src.tar.gz | head -n 1 | sed 's/^.*go//g; s/.src.tar.gz">//') || VERSION="$1"
 
 # Get architecture
 case $(uname -m) in
@@ -14,7 +14,7 @@ esac
 
 echo "Installing Go $VERSION ($ARCH)"
 
-[ -f go$VERSION.linux-$ARCH.tar.gz ] ||  wget https://golang.org/dl/go$VERSION.linux-$ARCH.tar.gz 
+[ -f go$VERSION.linux-$ARCH.tar.gz ] ||  wget https://go.dev/dl/go$VERSION.linux-$ARCH.tar.gz 
 sudo tar -C $PREFIX -xzf go$VERSION.linux-$ARCH.tar.gz
 rm go$VERSION.linux-$ARCH.tar.gz
 $PREFIX/go/bin/go version
