@@ -9,8 +9,14 @@ LOCAL_DIR=$3
 
 # Remove trailing '/' from autocompletion
 LOCAL_DIR=$(echo ${LOCAL_DIR} | sed 's|/$||')
-
 PATH_REMOTE=$(dirname $(echo ${LOCAL_DIR} | sed "s/${USER}/${USER_REMOTE}/g"))
+
+if [ $(( $(expr "$(uname --kernel-release)" : ".*WSL.*") )) ]
+then
+	notify='wsl-notify-send.exe --category'
+fi
+
+notify=${notify:='notify-send'}
 
 # Dependencies: entr, rsync
 inst='sudo apt install -y'
@@ -21,5 +27,5 @@ ssh ${USER_REMOTE}@${DEST} [ -d ${PATH_REMOTE} ] || ssh ${USER_REMOTE}@${DEST} m
 
 while [ "1" = "1" ];
 do
-	find ${LOCAL_DIR} | entr sh -c "rsync -rv --delete ${LOCAL_DIR} ${DEST}:${PATH_REMOTE} && notify-send \"Autocopy\" \"$(basename ${LOCAL_DIR}) ➡ ${PATH_REMOTE}@${DEST}\""
+	find ${LOCAL_DIR} | entr sh -c "rsync -rv --delete ${LOCAL_DIR} ${DEST}:${PATH_REMOTE} && $notify \"Autocopy\" \"$(basename ${LOCAL_DIR}) -> ${PATH_REMOTE}@${DEST}\""
 done
