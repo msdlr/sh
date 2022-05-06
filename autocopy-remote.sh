@@ -11,7 +11,7 @@ LOCAL_DIR=$3
 LOCAL_DIR=$(echo ${LOCAL_DIR} | sed 's|/$||')
 PATH_REMOTE=$(dirname $(echo ${LOCAL_DIR} | sed "s/${USER}/${USER_REMOTE}/g"))
 
-if [ $(( $(expr "$(uname --kernel-release)" : ".*WSL.*") )) ]
+if [ $(expr "$(uname --kernel-release)" : ".*WSL.*") != "0" ]
 then
 	notify='wsl-notify-send.exe --appId "autocopy-remote" --category'
 fi
