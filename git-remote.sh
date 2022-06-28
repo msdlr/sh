@@ -5,10 +5,10 @@ switch_to_https () {
 	
 	for l in ${lines_with_urls}
 	do
-		sed -i "${l}s|:|/| ; ${l}s|git@|https://|" .git/config
+		sed -i "${l}s|:|/| ; ${l}s|git@|https://|" ${repo_root}/.git/config
 		
 		# in case https:// gets replaced by https//
-		sed -i "s|///|://|g" .git/config
+		sed -i "s|///|://|g" ${repo_root}/.git/config
 	done
 
 	grep "url" .git/config
@@ -19,16 +19,16 @@ switch_to_ssh () {
 	
 	for l in ${lines_with_urls}
 	do
-		sed -i "s|https://|git@| ; ${l}s|/|:|" .git/config 
+		sed -i "s|https://|git@| ; ${l}s|/|:|" ${repo_root}/.git/config 
 	done
 	
-	grep "url" .git/config
+	grep "url" ${repo_root}/.git/config
 }
 
-lines_with_urls=$(grep -n "url" .git/config | cut -f1 | sed 's/://g')
+repo_root=$(git rev-parse --show-toplevel)
+lines_with_urls=$(grep -n "url" ${repo_root}/.git/config | cut -f1 | sed 's/://g')
 
 [ -z "${1}" ] && echo "https/ssh" && exit
-
 
 case ${1} in
 	"https")
