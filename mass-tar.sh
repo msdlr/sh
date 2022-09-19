@@ -9,7 +9,8 @@ do
 	file=$(realpath ${f})	   
 	
 	if [ -d ${file} ]; then
-		compress $(basename ${file}).tgz -C ${file} .
+		cd $(dirname ${file})
+		compress $(basename ${file}).tgz $(basename ${file})
 	fi
 
 	if [ -f ${file} ]; then
