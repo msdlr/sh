@@ -12,7 +12,7 @@ inst_deps () {
 }
 
 dl_tgz () {
-    tgz_link=$(curl -s https://omnetpp.org/download/ | grep -o "https.*omnet.*inux.*gz" | head -n 1)
+    tgz_link=$(curl -s https://omnetpp.org/download/ | grep -o "http.*$(uname -m).tgz" | sed 's/".*$//g' | head -n 1)
     cd ${SCRATCH_DIR}
     [ -f $(basename ${tgz_link}) ] || wget ${tgz_link}
 }
