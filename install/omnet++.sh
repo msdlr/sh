@@ -23,15 +23,20 @@ inst_deps () {
 }
 
 dl_tgz () {
-    tgz_link=$(curl -s https://omnetpp.org/download/ | grep -o "http.*$(uname -m).tgz" | sed 's/".*$//g' | head -n 1)
+    curl -s https://omnetpp.org/download/ | grep -o '"http.*.tgz"' | sed 's/"//g' > /tmp/omnetpp_archives
+    curl -s https://omnetpp.org/download/old | grep -o '"http.*.tgz"' | sed 's/"//g' >> /tmp/omnetpp_archives
+    tgz_link=$(cat /tmp/omnetpp_archives | fzf)
+    
     cd ${SCRATCH_DIR}
     [ -f $(basename ${tgz_link}) ] || wget ${tgz_link}
 }
 
 extract () {
-    cd ${DEST_PREFIX}
-    sudo tar -xzf "${SCRATCH_DIR}/$(basename ${tgz_link})"
-    omnet_root="$(find ${DEST_PREFIX} -maxdepth 1 -type d -name 'omnet*')"
+    cd /tmp
+    tar -xzf "${SCRATCH_DIR}/$(basename ${tgz_link})"
+    omnet_root="$(find ${PWD} -maxdepth 1 -type d -name 'omnet*' | head -n 1)"
+    sudo mv ${omnet_root} ${DEST_PREFIX}
+    omnet_root="${DEST_PREFIX}/$(basename ${omnet_root})"
     sudo chown -R ${USER}:${USER} ${omnet_root}
 }
 
