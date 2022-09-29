@@ -1,10 +1,18 @@
 #!/usr/bin/env sh
 
-DEST_PREFIX="/opt"
-SCRATCH_DIR="/tmp"
+# Dependencies: curl
+
+DEST_PREFIX=${DEST_PREFIX:="/opt"}
+SCRATCH_DIR=${SCRATCH_DIR:="/tmp"}
+
+if [ "$(which curl >/dev/null)" = "" ]
+then
+    echo "curl missing"
+    return
+fi
 
 inst_deps () {
-    sudo apt install -y python3 python3-pip libopenmpi* openmpi-*
+    sudo apt install -y python3 python3-pip cmake libopenmpi* openmpi-*
 
     sudo apt-get install build-essential clang lld gdb bison flex perl qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libqt5opengl5-dev libxml2-dev zlib1g-dev doxygen graphviz libwebkit2gtk-4.0-37 -y &
     python3 -m pip install --user --upgrade numpy pandas matplotlib scipy seaborn posix_ipc &
