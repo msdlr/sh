@@ -6,11 +6,14 @@ DEST_PREFIX=${DEST_PREFIX:="/opt"}
 SCRATCH_DIR=${SCRATCH_DIR:="/tmp"}
 exit=""
 
-if [ "$(which curl)" = "" ]
-then
-    echo "curl missing"
-    exit=return
-fi
+for dep in curl fzf
+do
+    if [ "$(which ${dep})" = "" ]
+    then
+        echo "${dep} missing"
+        exit=return
+    fi
+done
 
 $exit
 
