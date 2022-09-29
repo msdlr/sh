@@ -53,4 +53,5 @@ dl_tgz
 extract
 configure
 
+rm -i ${SCRATCH_DIR}/$(basename ${tgz_link})
 echo "Done!"
