@@ -4,12 +4,15 @@
 
 DEST_PREFIX=${DEST_PREFIX:="/opt"}
 SCRATCH_DIR=${SCRATCH_DIR:="/tmp"}
+exit=""
 
-if [ "$(which curl >/dev/null)" = "" ]
+if [ "$(which curl)" = "" ]
 then
     echo "curl missing"
-    return
+    exit=return
 fi
+
+$exit
 
 inst_deps () {
     sudo apt install -y python3 python3-pip cmake libopenmpi* openmpi-*
