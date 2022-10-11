@@ -3,6 +3,10 @@
 # Track changes in local repos and updates remote copies
 # Use: $0 remote_user remote_server local_dir 
 
+# Minimum parameter check
+[ $# -lt 3 ] && echo "Use: $0 remote_user remote_server local_dir" && return
+
+
 USER_REMOTE=$1
 DEST=$2
 LOCAL_DIR=$3
@@ -18,10 +22,20 @@ fi
 
 notify=${notify:='notify-send'}
 
-# Dependencies: entr, rsync
-inst='sudo apt install -y'
-which entr >/dev/null || $inst install entr
-which rsync >/dev/null || $inst install rsync
+# Depedency check
+exit=""
+
+for dep in rsync entr
+do
+    if [ "$(which ${dep})" = "" ]
+    then
+        echo "${dep} missing"
+        exit=return
+    fi
+done
+
+# Exit if dependencies not satisfied
+$exit
 
 ssh ${USER_REMOTE}@${DEST} [ -d ${PATH_REMOTE} ] || ssh ${USER_REMOTE}@${DEST} mkdir -pv ${PATH_REMOTE}
 
