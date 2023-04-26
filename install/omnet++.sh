@@ -46,8 +46,7 @@ extract () {
 configure () {
     cd ${omnet_root}
     . ./setenv
-    sed -i "s/^WITH_OSG=.*/WITH_OSG=no/g" ${omnet_root}/configure.user
-    ./configure
+    ./configure WITH_OSG=no 
     make -j all
 }
 
