@@ -2,26 +2,23 @@
 
 ddrive=/mnt/d
 
+. ~/.config/user-dirs.dirs
+
 if [ "$(id -u)" -ne "0" ]
 then 
-	IMG=$HOME/Imágenes
-	rm -rv $IMG && 
-	ln -s $ddrive/IMG $IMG
+	rm -r $XDG_PICTURES_DIR
+	ln -sv $ddrive/IMG $XDG_PICTURES_DIR
 	
-	VID=$HOME/Vídeos
-	rm -rv $VID && 
-	ln -s $ddrive/VID $VID
+	rm -r $XDG_VIDEOS_DIR
+	ln -sv $ddrive/VID $XDG_VIDEOS_DIR
 	
-	DOC=$HOME/Documentos
-	rm -rv $DOC && 
-	ln -s $ddrive/DOC $DOC
+	rm -r $XDG_DOCUMENTS_DIR
+	ln -sv $ddrive/DOC $XDG_DOCUMENTS_DIR
 	
-	DL=$HOME/Descargas
-	rm -rv $DL && 
-	ln -s $ddrive/DL $DL
+	rm -r $XDG_DOWNLOAD_DIR
+	ln -sv $ddrive/DL $XDG_DOWNLOAD_DIR
 	
-	MU=$HOME/Música
-	rm -rv $MU && 
-	ln -s $ddrive/MU $MU
+	rm -r $XDG_MUSIC_DIR
+	ln -sv $ddrive/MU $XDG_MUSIC_DIR
 fi
 exit
