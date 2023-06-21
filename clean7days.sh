@@ -15,6 +15,6 @@ dir=${XDG_DOWNLOAD_DIR}
 
 # Find files and delete them (Not the directry itself)
 find ${dir} -mtime +${days} -delete
-find ${dir} -depth -type d -empty -delete
+find ${dir} -mindepth 1 -depth -type d -empty -delete
 
 exit
