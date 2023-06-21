@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 # Selects downloads directory
+. ~/.config/user-dirs.dirs
 
-[ -d  $HOME/Descargas ] && dir="$HOME/Descargas" 
-[ -d  $HOME/Downloads ] && dir="$HOME/Downloads" 
+dir=${XDG_DOWNLOAD_DIR}
 
 # Otherwise, the parameter
 
@@ -14,12 +14,7 @@
 [ -z "$2" ] && days="7" || days="$2"
 
 # Find files and delete them (Not the directry itself)
-cd $dir
-files=`find . -mtime +$days | sed '/\.$/d'`
-
-for file in $files
-do
-	rm -rf $file 2>/dev/null 
-done
+find ${dir} -mtime +${days} -delete
+find ${dir} -depth -type d -empty -delete
 
 exit
