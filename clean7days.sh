@@ -14,7 +14,7 @@ dir=${XDG_DOWNLOAD_DIR}
 [ -z "$2" ] && days="7" || days="$2"
 
 # Find files and delete them (Not the directry itself)
-find ${dir}/ -mtime +${days} -delete
+find ${dir}/ -type f -mtime +${days} -delete
 find ${dir}/ -mindepth 1 -depth -type d -empty -delete
 
 exit
