@@ -20,6 +20,7 @@ do
 	# Find files and delete them (Not the directry itself)
 	find ${dir}/ -type f -mtime +${days} -delete
 	find ${dir}/ -mindepth 1 -depth -type d -empty -delete
+	find ${dir}/ -type l -xtype l -exec rm {} + # Broken symlinks
 done
 
 exit
