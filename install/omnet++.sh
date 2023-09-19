@@ -47,7 +47,7 @@ configure () {
     cd ${omnet_root}
     . ./setenv
     ./configure WITH_OSG=no 
-    make -j all
+    make -j$(getconf _NPROCESSORS_ONLN) all
 }
 
 inst_deps
