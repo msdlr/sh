@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Selects downloads directory
-. ~/.config/user-dirs.dirs
+[ -f ${HOME}/.config/user-dirs.dirs ] && . ${HOME}/.config/user-dirs.dirs
 
 dirs="${XDG_DOWNLOAD_DIR} ${XDG_CACHE_DIR}"
 
@@ -17,9 +17,17 @@ dirs="${XDG_DOWNLOAD_DIR} ${XDG_CACHE_DIR}"
 
 for dir in $dirs
 do
-	# Find files and delete them (Not the directry itself)
-	find ${dir}/ -type f -mtime +${days} -delete
-	find ${dir}/ -mindepth 1 -depth -type d -empty -delete
+	(
+	# Step 1: Remove files older than 7 days
+	find ${dir}/ -type f -mtime +${days} -exec rm -v {} \;
+	# Step 2: Remove all symlinks
+	find ${dir}/ -type l -exec rm -v {} \;
+	# Step 3: Delete empty folders recursively
+	find ${dir}/ -type d -depth -empty -exec rmdir -v {} \;
+	# Notify when done
+	notify-send "${dir} cleanup" "Remove files older than ${days} days"
+	) &
 done
+wait
 
 exit
