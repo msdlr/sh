@@ -79,7 +79,7 @@ configure_make () {
         qtenv=no
     fi
 
-    ./configure WITH_OSG=no $compiler_cfg $qtenv
+    ./configure WITH_OSG=no $compiler_cfg WITH_QTENV=$qtenv
     make -j$(getconf _NPROCESSORS_ONLN) all
 }
 
