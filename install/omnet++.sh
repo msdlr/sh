@@ -25,6 +25,31 @@ inst_deps () {
     wait
 }
 
+choose_compiler () {
+    available_compilers=""
+
+    if command -v gcc >/dev/null 2>&1; then
+        available_compilers="$available_compilers\ngcc"
+    fi
+
+    if command -v clang >/dev/null 2>&1; then
+        available_compilers="$available_compilers\nclang"
+    fi
+
+    if command -v icc >/dev/null 2>&1; then
+        available_compilers="$available_compilers\nicc"
+    fi
+
+    available_compilers=$(printf "$available_compilers" | sed '/^$/d')
+
+    if [ -z "$available_compilers" ]; then
+        echo "No compatible compilers found."
+        exit 1
+    fi
+
+    printf "$available_compilers\n" | fzf --header "Select compiler" 
+}
+
 configure_make () {
     cd ${OMNET_ROOT}
     VER=$(git --no-pager tag --list | tac | fzf)
