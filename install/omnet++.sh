@@ -36,8 +36,8 @@ choose_compiler () {
         available_compilers="$available_compilers\nclang"
     fi
 
-    if command -v icc >/dev/null 2>&1; then
-        available_compilers="$available_compilers\nicc"
+    if command -v icx >/dev/null 2>&1; then
+        available_compilers="$available_compilers\nicx"
     fi
 
     available_compilers=$(printf "$available_compilers" | sed '/^$/d')
@@ -56,8 +56,24 @@ configure_make () {
     git checkout ${VER}
     cp configure.user.dist configure.user
     . ./setenv
-    ./configure WITH_OSG=no 
-    make -j1 all
+
+    # Set compiler to use
+    case $(choose_compiler) in
+        "gcc")
+        compiler_cfg="CC=gcc CXX=g++ PREFER_CLANG=no PREFER_LLD=no"
+        ;;
+        "clang")
+        compiler_cfg="CC=clang CXX=clang++ PREFER_CLANG=yes PREFER_LLD=yes"
+        ;;
+        "icx")
+        compiler_cfg="CC=icx CXX=icpx PREFER_CLANG=no PREFER_LLD=no"
+        ;;
+        *)
+        echo "?"
+    esac
+
+    ./configure WITH_OSG=no $compiler_cfg
+    # make -j1 all
 }
 
 clone_omnet () {
