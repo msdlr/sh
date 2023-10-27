@@ -80,7 +80,7 @@ configure_make () {
     fi
 
     ./configure WITH_OSG=no $compiler_cfg WITH_QTENV=$qtenv
-    make -j$(getconf _NPROCESSORS_ONLN) all
+    make -j$(getconf _NPROCESSORS_ONLN) MODE=release all
 }
 
 clone_omnet () {
