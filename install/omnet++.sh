@@ -72,8 +72,15 @@ configure_make () {
         echo "?"
     esac
 
-    ./configure WITH_OSG=no $compiler_cfg
-    # make -j1 all
+    # Compile with/without qtenv
+    if [ -n "$DISPLAY" ]; then
+        qtenv=yes
+    else
+        qtenv=no
+    fi
+
+    ./configure WITH_OSG=no $compiler_cfg $qtenv
+    make -j1 all
 }
 
 clone_omnet () {
