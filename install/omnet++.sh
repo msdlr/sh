@@ -5,6 +5,7 @@
 DEST_PREFIX=${DEST_PREFIX:="/opt"}
 OMNET_ROOT=${OMNET_ROOT:=${DEST_PREFIX}/omnetpp}
 exit=""
+SCRATCH_DIR=${SCRATCH_DIR:="/tmp"}
 
 for dep in curl fzf
 do
