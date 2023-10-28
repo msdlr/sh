@@ -52,8 +52,6 @@ choose_compiler () {
 
 configure_make () {
     cd ${OMNET_ROOT}
-    VER=$(git --no-pager tag --list | tac | fzf)
-    git checkout ${VER}
     cp configure.user.dist configure.user
     . ./setenv
 
@@ -94,6 +92,9 @@ clone_omnet () {
         git pull
         cd -
     fi
+    cd ${OMNET_ROOT}
+    VER=$(git --no-pager tag --list | tac | fzf)
+    git checkout ${VER}
 }
 
 dl_tgz () {
