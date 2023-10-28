@@ -105,10 +105,25 @@ dl_tgz () {
     [ -f $(basename ${tgz_link}) ] || wget ${tgz_link}
 }
 
+extract () {
+    cd /tmp
+    tar -xzf "${SCRATCH_DIR}/$(basename ${tgz_link})"
+    omnet_root="$(find ${PWD} -maxdepth 1 -type d -name 'omnet*' | head -n 1)"
+    sudo mv ${omnet_root} ${DEST_PREFIX}
+    omnet_root="${DEST_PREFIX}/$(basename ${omnet_root})"
+    sudo chown -R ${USER}:${USER} ${omnet_root}
+}
 
 inst_deps
-clone_omnet
-configure_make
 
+# Get the tgz with IDE or jus the sim engine
+if [ -n "$DISPLAY" ]; then
+    dl_tgz
+    extract
+else
+    clone_omnet
+fi
+
+configure_make
 
 echo "Done!"
