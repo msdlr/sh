@@ -109,10 +109,10 @@ dl_tgz () {
 extract () {
     cd /tmp
     tar -xzf "${SCRATCH_DIR}/$(basename ${tgz_link})"
-    omnet_root="$(find ${PWD} -maxdepth 1 -type d -name 'omnet*' | head -n 1)"
-    sudo mv ${omnet_root} ${DEST_PREFIX}
-    omnet_root="${DEST_PREFIX}/$(basename ${omnet_root})"
-    sudo chown -R ${USER}:${USER} ${omnet_root}
+    OMNET_ROOT="$(find ${PWD} -maxdepth 1 -type d -name 'omnet*' | head -n 1)"
+    mv ${OMNET_ROOT} ${DEST_PREFIX} || sudo mv ${OMNET_ROOT} ${DEST_PREFIX}
+    OMNET_ROOT="${DEST_PREFIX}/$(basename ${OMNET_ROOT})"
+    chown -R ${USER}:${USER} ${OMNET_ROOT} || sudo chown -R ${USER}:${USER} ${OMNET_ROOT}
 }
 
 inst_deps
