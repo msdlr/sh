@@ -116,6 +116,9 @@ extract () {
 
 inst_deps
 
+# Detect icx installation
+[ -f /opt/intel/oneapi/setvars.sh ] && . /opt/intel/oneapi/setvars.sh
+
 # Get the tgz with IDE or jus the sim engine
 if [ -n "$DISPLAY" ]; then
     dl_tgz
