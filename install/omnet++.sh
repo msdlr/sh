@@ -96,6 +96,16 @@ clone_omnet () {
     fi
 }
 
+dl_tgz () {
+    curl -s https://omnetpp.org/download/ | grep -o "\"http.*.tgz\"" | sed 's/"//g' > /tmp/omnetpp_archives
+    curl -s https://omnetpp.org/download/old | grep -o "\"http.*.tgz\"" | sed 's/"//g' >> /tmp/omnetpp_archives
+    tgz_link=$(cat /tmp/omnetpp_archives | fzf)
+    
+    cd ${SCRATCH_DIR}
+    [ -f $(basename ${tgz_link}) ] || wget ${tgz_link}
+}
+
+
 inst_deps
 clone_omnet
 configure_make
