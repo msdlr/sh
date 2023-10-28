@@ -54,6 +54,7 @@ choose_compiler () {
 configure_make () {
     cd ${OMNET_ROOT}
     cp configure.user.dist configure.user
+    export PATH=${OMNET_ROOT}/bin:$PATH
     . ./setenv
 
     # Set compiler to use
