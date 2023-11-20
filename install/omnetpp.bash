@@ -69,7 +69,8 @@ configure_make () {
         compiler_cfg="CC=icx CXX=icpx PREFER_CLANG=no PREFER_LLD=no"
         ;;
         *)
-        echo "?"
+        echo "No compiler selected, using gcc"
+        compiler_cfg="CC=gcc CXX=g++ PREFER_CLANG=no PREFER_LLD=no"
     esac
 
     # Compile with/without qtenv
@@ -96,6 +97,12 @@ clone_omnet () {
     fi
     cd ${OMNET_ROOT}
     VER=$(git --no-pager tag --list | tac | fzf)
+    if [ -z "${VER}" ]
+    then
+        echo "Version not selected"
+        exit 1
+    fi
+
     git checkout ${VER}
 }
 
@@ -103,6 +110,11 @@ dl_tgz () {
     curl -s https://omnetpp.org/download/ | grep -o "\"http.*.tgz\"" | sed 's/"//g' > /tmp/omnetpp_archives
     curl -s https://omnetpp.org/download/old | grep -o "\"http.*.tgz\"" | sed 's/"//g' >> /tmp/omnetpp_archives
     tgz_link=$(cat /tmp/omnetpp_archives | fzf)
+    if [ -z "${VER}" ]
+    then
+        echo "Version not selected"
+        exit 1
+    fi
     
     cd ${SCRATCH_DIR}
     [ -f $(basename ${tgz_link}) ] || wget ${tgz_link}
