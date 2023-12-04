@@ -9,8 +9,11 @@ def check_latex_quotes(file_path):
 
     with open(file_path, 'r', encoding='utf-8') as file:
         for line_number, line in enumerate(file, start=1):
+            ignore_quote = False
             for char_number, char in enumerate(line, start=1):
-                if char in {'"', "'"}:
+                if char == '%':
+                    ignore_quote = True
+                elif char in {'"', "'"} and not ignore_quote:
                     prev_char = line[char_number - 2] if char_number >= 2 else None
                     next_char = line[char_number] if char_number < len(line) else None
 
@@ -22,6 +25,8 @@ def check_latex_quotes(file_path):
                             stack.pop()
                         else:
                             stack.append((char, line_number, char_number))
+                elif char == '\n':
+                    ignore_quote = False
 
     for char, line_number, char_number in stack:
         print(f"Error: Unmatched {char} quote at line {line_number}, character {char_number}.")
