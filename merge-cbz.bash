@@ -9,6 +9,7 @@ fi
 # Specify the output combined .cbz file name
 output_file="$1"
 [ -f ${output_file} ] && rm ${output_file}
+mkdir -p $(dirname $output_file)
 shift
 
 # Create a temporary directory to extract the contents
@@ -33,7 +34,8 @@ do
     rmdir ${i}
 done
 
-zip -qr "$output_file" "."
+cd - >/dev/null
+zip -qrj "$output_file" ${temp_dir}
 echo "New cbz file created: $output_file"
 
 rm -rf ${temp_dir}
