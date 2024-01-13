@@ -8,6 +8,8 @@ for r in $repos
 do
 	if [ -d $r/.git ]; then
 		cd $r	
-		timeout 600 git pull &
+		git submodule init
+		timeout 60 git pull --recurse-submodules & 
 	fi
 done
+wait
