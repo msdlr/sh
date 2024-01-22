@@ -110,7 +110,7 @@ dl_tgz () {
     curl -s https://omnetpp.org/download/ | grep -o "\"http.*.tgz\"" | sed 's/"//g' > /tmp/omnetpp_archives
     curl -s https://omnetpp.org/download/old | grep -o "\"http.*.tgz\"" | sed 's/"//g' >> /tmp/omnetpp_archives
     tgz_link=$(cat /tmp/omnetpp_archives | fzf)
-    if [ -z "${VER}" ]
+    if [ -z "${tgz_link}" ]
     then
         echo "Version not selected"
         exit 1
