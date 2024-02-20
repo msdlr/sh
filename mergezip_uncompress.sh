@@ -15,7 +15,7 @@ echo "$to_zip" | while IFS= read -r zip_file; do
     if [ $? -eq 0 ]
     then
         notify-send "$zip_file" "Uncompressed " 2>/dev/null
-        rm -v "$zip_file".*
-        rm -v "$zip_file"
+        rm -vi "$zip_file".*
+        rm -vi "$zip_file"
     fi
 done
