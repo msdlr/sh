@@ -19,11 +19,11 @@ for dir in $dirs
 do
 	(
 	# Step 1: Remove files older than 7 days
-	find ${dir}/ -type f -mtime +${days} -exec rm -v {} \;
+	find ${dir}/ -mindepth 1 -type f -mtime +${days} -exec rm -v {} \;
 	# Step 2: Remove all symlinks
-	find ${dir}/ -type l -exec rm -v {} \;
+	find ${dir}/ -mindepth 1 -type l -exec rm -v {} \;
 	# Step 3: Delete empty folders recursively
-	find ${dir}/ -type d -depth -empty -exec rmdir -v {} \;
+	find ${dir}/ -mindepth 1 -type d -depth -empty -exec rmdir -v {} \;
 	# Notify when done
 	notify-send "${dir} cleanup" "Remove files older than ${days} days"
 	) &
