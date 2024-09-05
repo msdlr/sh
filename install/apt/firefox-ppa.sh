@@ -25,6 +25,9 @@ echo '
 Package: *
 Pin: origin packages.mozilla.org
 Pin-Priority: 1000
-' | sudo tee /etc/apt/preferences.d/mozilla
 
-sudo apt update -y && sudo apt install --reinstall firefox -y
+Package: firefox*
+Pin: release o=Ubuntu
+Pin-Priority: -1' | sudo tee /etc/apt/preferences.d/mozilla
+
+sudo apt update -y && sudo apt install -t 'o=LP-PPA-mozillateam' firefox -y
