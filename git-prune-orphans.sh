@@ -17,10 +17,10 @@ rm ${local_branches} ${remote_branches}
 
 if [ ! -z "$branches_not_in_remote" ]
 then
-    echo "Orphan LOCAL branches (not in remote $remote_name)"
+    echo "\e[31mOrphan LOCAL branches (not in remote $remote_name)\e[0m"
     for b in $branches_not_in_remote
     do
-        printf "> Do you want to delete orphan branch '%s'? (y/n): " "$b"
+        printf "> Do you want to delete orphan branch '\e[4m%s\e[0m'? (y/n): " "$b"
         read confirm
         if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
             printf "\e[32m"
@@ -34,10 +34,10 @@ fi
 
 if [ ! -z "$remote_branches_not_in_local" ]
 then
-    echo "Orphan REMOTE branches (only in remote $remote_name)"
+    echo "\e[31mOrphan REMOTE branches (only in remote $remote_name)\e[0m"
     for b in $remote_branches_not_in_local
     do
-        printf "> Do you want to delete remote orphan branch ${remote_name}/'%s'? (y/n): " "$b"
+        printf "> Do you want to delete remote orphan branch '\e[4m${remote_name}/%s\e[0m'? (y/n): " "$b"
         read confirm
         if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
             printf "\e[32m"
