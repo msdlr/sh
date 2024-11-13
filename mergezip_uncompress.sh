@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# to_zip="Batman Begins (1080p).zip"
 to_zip=$(ls *.zip* | sed 's/.zip.*/.zip/g' | uniq )
 
 [ "$to_zip" = "" ] && exit
