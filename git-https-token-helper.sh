@@ -14,7 +14,7 @@ printf "\n"
 # Determine the Git URL based on the input
 if echo "$git_url" | grep -q "^https://"; then
   # URL starts with "https://", replace it with "https://git:$git_token"
-  new_git_url="https://git:$git_token${git_url#https://}"
+  new_git_url="https://git:$git_token@${git_url#https://}"
 else
   # URL does not start with "https://", prepend "https://git:$git_token@"
   new_git_url="https://git:$git_token@$git_url"
