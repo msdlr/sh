@@ -30,7 +30,7 @@ do
 		# Step 3: Delete empty folders recursively
 		find ${dir}/ -mindepth 1 -depth -type d  -empty -exec rmdir -v {} \;
 		# Notify when done
-		notify-send "${dir} cleanup" "Remove files older than ${days} days"
+		[ "$(command -v notify-send)" ] && notify-send "${dir} cleanup" "Remove files older than ${days} days"
 	fi
 done
 
