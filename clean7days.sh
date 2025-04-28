@@ -7,7 +7,8 @@ dirs="${XDG_DOWNLOAD_DIR}
 ${XDG_CACHE_DIR}
 /storage/emulated/0/Download
 /storage/emulated/0/DCIM
-${HOME}/.var/app/org.telegram.desktop/data/TelegramDesktop/tdata/temp_data/"
+${HOME}/.var/app/org.telegram.desktop/data/TelegramDesktop/tdata/temp_data/
+${HOME}/.var/app/org.kde.kasts/data/KDE/kasts/enclosures"
 
 [ -z "$dirs" ] && [ -z "$1" ] && exit
 
