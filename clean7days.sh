@@ -5,6 +5,7 @@
 
 dirs="${XDG_DOWNLOAD_DIR}
 ${XDG_CACHE_DIR}
+${HOME}/Downloads
 /storage/emulated/0/Download
 /storage/emulated/0/DCIM
 ${HOME}/.var/app/org.telegram.desktop/data/TelegramDesktop/tdata/temp_data/
