@@ -5,6 +5,13 @@
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 old.tex new.tex"
     exit 1
+else
+    for file in "$1" "$2"; do
+        if [ ! -f "$file" ]; then
+            echo "File $file does not exist."
+            exit 1
+        fi
+    done
 fi
 
 oldtex="$(realpath "$1")"
