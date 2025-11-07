@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+[ -z "$1" ] && exit
+file="$1"
+
+if [ ! -f "$file" ]
+then
+    echo "File $1 not found!"
+    exit 1
+fi
+
+if [ -z "$(command -v latexdiff)" ]
+then   
+    echo "latexdiff command not found!"
+    exit 1
+fi
+
+out_name=$(echo "$1" | sed 's/\.tex$/-flattened.tex/')
+
+latexdiff --flatten "$1" "$1" > "$out_name" &&
+sed -i '/%DIF/d' "$out_name" &&
+return 0
+return 1
