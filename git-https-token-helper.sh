@@ -1,27 +1,39 @@
 #!/bin/sh
 
-# Prompt user for Git repository URL
-printf "Enter Git repository URL (example: https://github.com or https://github.com/user/repo): "
-read git_url
+# git_url=${git_url:="https://git@example.org"}
+# git_token=${git_token:="token"}
+git_user=${git_user:="git"}
 
-# Prompt user for access token
-printf "Enter Git access token: "
-# stty -echo
-read git_token
-# stty echo
-printf "\n"
-
-# Determine the Git URL based on the input
-if echo "$git_url" | grep -q "^https://"; then
-  # URL starts with "https://", replace it with "https://git:$git_token"
-  new_git_url="https://git:$git_token@${git_url#https://}"
-else
-  # URL does not start with "https://", prepend "https://git:$git_token@"
-  new_git_url="https://git:$git_token@$git_url"
+# Use existing value if already set, otherwise prompt user
+if [ -z "$git_url" ]; then
+  printf "Enter Git repository URL (example: https://github.com or https://github.com/user/repo or git@github.com:user/repo.git): "
+  read git_url
 fi
 
-if ! echo "$git_url" | grep -q "^https://"; then
+if [ -z "$git_token" ]; then
+  printf "Enter Git access token: "
+  # stty -echo
+  read git_token
+  # stty echo
+  printf "\n"
+fi
+
+# Case 1: SSH-style git@...
+if echo "$git_url" | grep -q "git@"; then
+  git_url=$(echo "$git_url" | sed -E 's|git@||; s|https://||')
+
+  new_git_url="https://${git_user}:${git_token}@${git_url}"
+
+  git_url="https://""$git_url"
+
+# Case 2: HTTPS URL
+elif echo "$git_url" | grep -q "^https://"; then
+  new_git_url="https://${git_user}:$git_token@${git_url#https://}"
+
+# Case 3: No scheme
+else
   git_url="https://$git_url"
+  new_git_url="https://${git_user}:$git_token@${git_url#https://}"
 fi
 
 # Display the modified Git URL
