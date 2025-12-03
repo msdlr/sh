@@ -30,7 +30,7 @@ do
 		# Step 2: Remove all symlinks
 		find ${dir}/ -mindepth 1 -type l -exec rm -fv {} \;
 		# Step 3: Delete empty folders recursively
-		find ${dir}/ -mindepth 1 -depth -type d  -empty -exec rmdir -fv {} \;
+		find ${dir}/ -mindepth 1 -depth -type d  -empty -exec rmdir -v {} \;
 		# Notify when done
 		[ "$(command -v notify-send)" ] && notify-send "${dir} cleanup" "Remove files older than ${days} days"
 	fi
