@@ -26,9 +26,9 @@ do
 	if [ -d "$dir" ]
 	then
 		# Step 1: Remove files older than 7 days
-		find ${dir}/ -mindepth 1 -type f -mtime +${days} -exec rm -v {} \;
+		find ${dir}/ -mindepth 1 -type f -mtime +${days} -exec rm -fv {} \;
 		# Step 2: Remove all symlinks
-		find ${dir}/ -mindepth 1 -type l -exec rm -v {} \;
+		find ${dir}/ -mindepth 1 -type l -exec rm -fv {} \;
 		# Step 3: Delete empty folders recursively
 		find ${dir}/ -mindepth 1 -depth -type d  -empty -exec rmdir -v {} \;
 		# Notify when done
