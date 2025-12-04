@@ -1,0 +1,9 @@
+#!/bin/env sh
+
+if [ "$(realpath -s ${1})" != "$(realpath ${1})" ]
+then
+    # TODO: check MacOS compat with this
+    cp -rv --remove-destination $(realpath ${1}) $(realpath -s ${1})
+fi
+
+exit $?
