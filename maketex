@@ -1,0 +1,32 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]; then
+	echo "Usage: maketex <file.tex>"
+	exit 1
+fi
+
+tex_command="latexmk -pdf -synctex=1 -interaction=nonstopmode"
+eval $tex_command
+
+if [ -f "$1" ]; then
+	cd $(dirname $1)
+	prefix=$(echo $1 | sed 's/.tex//g')
+	eval $tex_command $1 && notify-send "LaTeX" "First pdflatex pass complete." &&
+	biber $prefix && notify-send "LaTeX" "BibTeX pass complete." &&
+	eval $tex_command $1 && notify-send "LaTeX" "Second pdflatex pass complete." &&
+	biber $prefix && notify-send "LaTeX" "Biber pass complete." &&
+	makeglossaries $prefix && notify-send "LaTeX" "Makeglossaries pass complete." &&
+	eval $tex_command $1 && notify-send "LaTeX" "Final pdflatex pass complete. PDF is ready."
+	unset tex_command
+	for ext in aux log bbl blg glo gls glg acr acn ist out alg bcf fls lof lot toc run.xml synctex.gz fdb_latexmk snm nav; do
+    	[ "$(ls *.$ext 2>/dev/null)" != "" ] && rm *.$ext 2>/dev/null
+	done
+else
+	# If number of parameters is 0, print usage
+	if [ "$#" -eq 0 ]; then
+		echo "Usage: maketex <file.tex>"
+		return 1
+	fi
+	echo "File '$1' not found!"
+	return 1
+fi
