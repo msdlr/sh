@@ -18,6 +18,6 @@ fi
 out_name=$(echo "$1" | sed 's/\.tex$/-flattened.tex/')
 
 latexdiff --flatten "$1" "$1" > "$out_name" &&
-sed -i '/%DIF/d' "$out_name" &&
+sed -i '/%DIF/d; /DIFscaledelfig/d' "$out_name" &&
 return 0
 return 1
