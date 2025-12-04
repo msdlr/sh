@@ -14,11 +14,9 @@ ${HOME}/.var/app/org.kde.kasts/data/KDE/kasts/enclosures"
 [ -z "$dirs" ] && [ -z "$1" ] && exit
 
 # Otherwise, the parameter
-
 [ -z "$1" ] || dir="$1"
 
 # Remove files older than 7 days, or second parameter
-
 [ -z "$2" ] && days="7" || days="$2"
 
 for dir in $dirs
