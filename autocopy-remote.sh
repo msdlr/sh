@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env sh
 
 # Track changes in local repos and updates remote copies
 # Use: $0 remote_user remote_server local_dir 

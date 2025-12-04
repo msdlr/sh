@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env sh
 # Distro-agnostic package managers
 if [ "$(command -v flatpak)" >/dev/null != "" ]
 then
@@ -53,7 +53,7 @@ then
     fi
 fi
 
-  # RPM-based
+# RPM-based
 if [ "$(command -v dnf)" >/dev/null != "" ]
 then
     echo "\e[32m> Upgrading dnf packages...\e[97m"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env sh
 
 # git_url=${git_url:="https://git@example.org"}
 # git_token=${git_token:="token"}

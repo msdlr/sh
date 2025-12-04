@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/env sh
 
 to_zip=$(ls *.zip* | sed 's/.zip.*/.zip/g' | uniq )
 
