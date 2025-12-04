@@ -18,7 +18,7 @@ if [ -f "$1" ]; then
 	eval $tex_command $1 && notify-send "LaTeX" "Final pdflatex pass complete. PDF is ready."
 	unset tex_command
 	for ext in aux log bbl blg glo gls glg acr acn ist out alg bcf fls lof lot toc run.xml synctex.gz fdb_latexmk snm nav; do
-    	[ "$(ls *.$ext 2>/dev/null)" != "" ] && rm *.$ext 2>/dev/null
+    	[ -f $prefix.$ext ] && rm *.$ext 2>/dev/null
 	done
 else
 	# If number of parameters is 0, print usage
