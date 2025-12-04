@@ -6,6 +6,19 @@ then
     exit 1
 fi
 
+tzip='tar -czvf'
+if [ -f "$(command -v pigz)" 2>/dev/null ]; then
+  if [ "$(uname)" = "Darwin" ]; then
+    if [ -x "$(command -v gtar)" ]; then
+        tzip='gtar -I pigz -cvf' # Multithreaded
+    else
+      tzip='tar -czvf'
+    fi
+  else
+    tzip='tar -I pigz -cvf' # Multithreaded
+  fi
+fi
+
 date_suffix=""
   
 # Check for the -d flag
@@ -20,13 +33,13 @@ for f in "$@"; do
   if [ -d "$file" ]; then
     (
     cd "$(dirname "$file")"
-    tzip "$(basename "$file")${date_suffix}.tgz" "$(basename "$file")"
+    eval $tzip "$(basename "$file")${date_suffix}.tgz" "$(basename "$file")"
     )
   fi
 
   if [ -f "$file" ]; then
     (
-    tzip "$(basename "$file")${date_suffix}.tgz" -C "$(dirname "$file")" "$(basename "$file")"
+    eval $tzip "$(basename "$file")${date_suffix}.tgz" -C "$(dirname "$file")" "$(basename "$file")"
     )
   fi
 done
