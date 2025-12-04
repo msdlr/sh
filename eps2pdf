@@ -1,0 +1,22 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]
+then
+    echo "Usage: $0 <file1.eps> ... <filen.eps>"
+    exit 1
+fi
+
+if [ "$(command -v epstopdf)" = "" ]
+then
+    echo "Command epstopdf not found"
+    exit 1
+fi
+
+for f in ${@}
+do
+    while [ "$(jobs | wc -l)" -ge "$(getconf _NPROCESSORS_ONLN)" ]; do
+      sleep 0.01
+    done
+    ([ -f ${f} ] && epstopdf ${f}) &
+done
+wait

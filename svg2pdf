@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]
+then
+    echo "Usage: $0 <file1.svg> ... <filen.svg>"
+    exit 1
+fi
+
+if [ "$(command -v rsvg-convert)" = "" ]
+then
+    echo "Command rsvg-convert not found"
+    exit 1
+fi
+
+for f in "${@}"
+do
+	
+    while [ "$(jobs | wc -l)" -ge "$(getconf _NPROCESSORS_ONLN)" ]; do
+        sleep 0.01
+    done
+        
+    rsvg-convert -f pdf -o "$(echo "${f}" | sed 's/.svg/.pdf/g')" ${f} &
+done
+wait
