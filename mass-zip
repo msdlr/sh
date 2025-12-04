@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]
+then
+    echo "Usage: $0 <file1> ... <filen>"
+    exit 1
+fi
+
+
+date_suffix=""
+
+# Check for the -d flag
+if [ "$1" == "-d" ]; then
+    date_suffix="-$(date +%Y%m%d_%H%M)"
+    shift  # Remove the -d argument from the list
+fi
+
+for f in "$@"; do
+    file=$(realpath "${f}")
+
+    if [ -d "${file}" ]; then
+        cd "$(dirname "${file}")"
+        zip -r "$(basename "${file}")${date_suffix}.zip" "$(basename "${file}")"
+    fi
+
+    if [ -f "${file}" ]; then
+        zip "$(basename "${file}")${date_suffix}.zip" -j "${file}"
+    fi
+done

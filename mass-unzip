@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ "$#" -eq 0 ]
+then
+    echo "Usage: $0 <file1.zip> ... <filen.zip>"
+    exit 1
+fi
+
+for f in "$@"
+do
+    if [ -f "${f}" ]; then
+        cd "$(dirname "${f}")"
+        unzip "${f}"
+        cd - >/dev/null
+    fi
+done
