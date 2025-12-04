@@ -59,3 +59,15 @@ then
     echo "\e[32m> Upgrading dnf packages...\e[97m"
     sudo dnf upgrade -y && sudo dnf autoremove -y
 fi
+
+# MacOS specific
+if [ "$(uname)" = "Darwin" ]
+then
+    sudo softwareupdate -ia
+
+    if [ "$(command -v mas)" >/dev/null != "" ]
+    then
+        updates=$(mas outdated)
+        [ -n "$updates" ] && mas upgrade
+    fi
+fi
