@@ -13,10 +13,17 @@ then
     sudo snap refresh
 fi
 
+echo "\e[32m> Upgrading brew packages...\e[97m"
 if [ "$(command -v brew)" >/dev/null != "" ]
 then
-    echo "\e[32m> Upgrading brew packages...\e[97m"
-    brew update && brew upgrade && brew cleanup
+    if [ "$(uname)" = "Darwin" ]
+    then
+        brew upgrade --cask &&
+        brew upgrade --greedy
+    else 
+        brew upgrade
+    fi
+    brew cleanup
 fi
 
 # Debian-based
