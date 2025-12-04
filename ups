@@ -33,7 +33,6 @@ then
     then
         echo "\e[32m> Upgrading pacstall packages...\e[97m" && yes | sudo pacstall -P -Up
     fi
-    return
 fi
 
 # Arch-based
@@ -45,7 +44,6 @@ then
     then
         yay -Syyu --noconfirm
     fi
-    return
 fi
 
   # RPM-based
@@ -53,5 +51,4 @@ if [ "$(command -v dnf)" >/dev/null != "" ]
 then
     echo "\e[32m> Upgrading dnf packages...\e[97m"
     sudo dnf upgrade -y && sudo dnf autoremove -y
-    return
 fi
