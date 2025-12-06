@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 # Distro-agnostic package managers
 if [ "$(command -v flatpak)" >/dev/null != "" ]
 then
