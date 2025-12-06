@@ -1,21 +1,32 @@
 #!/usr/bin/env sh
+
+print () {
+    if [ "$(uname)" = Darwin ]
+    then
+        printf "$1\n"
+    else
+        echo -e "$1"
+    fi
+}
+
+
 # Distro-agnostic package managers
 if [ "$(command -v flatpak)" >/dev/null != "" ]
 then
-    echo -e "\e[32m> Upgrading flatpak packages...\e[97m"
+    print "\e[32m> Upgrading flatpak packages...\e[97m"
     flatpak update -y 
     flatpak uninstall --unused -y
 fi
 
 if [ "$(command -v snap)" >/dev/null != "" ]
 then
-    echo -e "\e[32m> Upgrading snap packages...\e[97m"
+    print "\e[32m> Upgrading snap packages...\e[97m"
     sudo snap refresh
 fi
 
 if [ "$(command -v brew)" >/dev/null != "" ]
 then
-    echo -e "\e[32m> Upgrading brew packages...\e[97m"
+    print "\e[32m> Upgrading brew packages...\e[97m"
     if [ "$(uname)" = "Darwin" ]
     then
         brew upgrade --cask &&
@@ -29,23 +40,23 @@ fi
 # Debian-based
 if [ "$(command -v apt)" >/dev/null != "" ]
 then
-    echo -e "\e[32m> Upgrading apt packages...\e[97m"
+    print "\e[32m> Upgrading apt packages...\e[97m"
     sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
     if [ "$(command -v deb-get)" >/dev/null != "" ]
     then
-        echo -e "\e[32m> Upgrading deb-get packages...\e[97m"
+        print "\e[32m> Upgrading deb-get packages...\e[97m"
         deb-get update && deb-get upgrade
     fi
     if [ -x "$(command -v pacstall)" ]
     then
-        echo -e "\e[32m> Upgrading pacstall packages...\e[97m" && yes | sudo pacstall -P -Up
+        print "\e[32m> Upgrading pacstall packages...\e[97m" && yes | sudo pacstall -P -Up
     fi
 fi
 
 # Arch-based
 if [ "$(command -v pacman)" >/dev/null != "" ]
 then
-    echo -e "\e[32m> Upgrading pacman packages...\e[97m"
+    print "\e[32m> Upgrading pacman packages...\e[97m"
     sudo pacman -Syyu --noconfirm
     if [ "$(command -v yay)" >/dev/null != "" ]
     then
@@ -56,7 +67,7 @@ fi
 # RPM-based
 if [ "$(command -v dnf)" >/dev/null != "" ]
 then
-    echo -e "\e[32m> Upgrading dnf packages...\e[97m"
+    print "\e[32m> Upgrading dnf packages...\e[97m"
     sudo dnf upgrade -y && sudo dnf autoremove -y
 fi
 
